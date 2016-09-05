@@ -1,11 +1,16 @@
 # elm-url-parser
 
-This library is an attempt to add more functionality to `evancz/url-parser`. Specifically, the library has combinators to deal with query parameters and hash fragments.
+This library is an attempt to add more functionality to `evancz/url-parser`. Specifically, the library has combinators to deal with query parameters and hash fragments:
+- (</>) : composes two parsers with the second being applied to `PathPart`s only (see below)
+- (<#>) : composes two parsers with the second being applied to `Hash`s only (see below)
+- (<?>) : composes two parsers with the second being applied to `Query`s only (see below)
 
 In addition, there are a couple other combinators:
 - `many` : matches zero or more accepts URL chunks which match the supplied parser
 - `param` : matches a query parameter with the given key and a value matching the supplied parser
 - `optParam`: matches a query parameter with the given key and a value matching the supplied parser which may or may not be present in the `location` `search`
+
+(I'm using a `Dict String String` to hold the key-value pairs in the `location` `search` so you don't need to worry about the ordering of the query parameters when using the `param` and `optParam` combinators.)
 
 ## Approach
 
