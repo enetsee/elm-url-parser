@@ -33,10 +33,12 @@ type Parser formatter result
 {-| Helper to construct `URLParts` from elements of a `location`
 
 -}
-urlParts : List String -> List ( String, String ) -> String -> UrlParts
-urlParts pathParts params hash =
+urlParts : List String -> List ( String, String ) -> List String -> UrlParts
+urlParts pathParts params hashParts =
     { seen = []
-    , rest = (List.map PathPart pathParts) ++ [ Query (Dict.fromList params), Hash hash ]
+    , rest =
+        (List.map PathPart pathParts)
+            ++ (Query (Dict.fromList params) :: (List.map Hash hashParts))
     }
 
 
@@ -279,9 +281,9 @@ custom tipe urlPartToSomething =
 {-| A parser that matches any string. So the following parser will match
 URLs like `/search/whatever` where `whatever` can be replaced by any string
 you can imagine.
-    search : Parser (String -> a) a
-    search =
-      s "search" </> string
+    search : UrlPartExtractor String -> Parser (String -> a) a
+    search e =
+      (lit "search" </> string) e
 **Note:** this parser will only match URLs with exactly two segments. So things
 like `/search/this/that` would fail. You could use `search </> many string` to handle
 that case if you wanted though!
