@@ -6,7 +6,7 @@ This library is an attempt to add more functionality to `evancz/url-parser`. Spe
 - (<?>) : composes two parsers with the second being applied to `Query`s only (see below)
 
 In addition, there are a couple other combinators:
-- `many` : matches zero or more accepts URL chunks which match the supplied parser
+- `many` : matches zero or more URL chunks which match the supplied parser
 - `param` : matches a query parameter with the given key and a value matching the supplied parser
 - `optParam`: matches a query parameter with the given key and a value matching the supplied parser which may or may not be present in the `location` `search`
 
