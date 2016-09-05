@@ -47,7 +47,7 @@ compose p q =
                     Err msg
 
 
-{-| A combinator which cause the second parser to be applied to `PathPart`
+{-| A combinator which causes the second parser to be applied to `PathPart`
 `UrlPart`s only
 
 -}
@@ -60,7 +60,7 @@ compose p q =
     compose (toParser1 urlPartToSomething) (toParser2 extractPathPart)
 
 
-{-| A combinator which cause the second parser to be applied to `Hash`
+{-| A combinator which causes the second parser to be applied to `Hash`
 `UrlPart`s only
 
 -}
@@ -73,7 +73,7 @@ compose p q =
     compose (toParser1 urlPartToSomething) (toParser2 extractHash)
 
 
-{-| A combinator which cause the second parser to be applied to `Query`
+{-| A combinator which causes the second parser to be applied to `Query`
 `UrlPart`s only
 
 -}
@@ -298,8 +298,8 @@ int urlPartToSomething =
 
 
 manyHelper :
-    (a -> Parser (b -> b) c)
-    -> a
+    (UrlPartExtractor a -> Parser (b -> b) c)
+    -> UrlPartExtractor a
     -> List c
     -> UrlParts
     -> (List c -> d)
