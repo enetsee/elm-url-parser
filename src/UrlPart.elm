@@ -21,13 +21,6 @@ type alias UrlPartExtractor a =
     UrlPart -> Result String a
 
 
-urlParts : List String -> List ( String, String ) -> String -> UrlParts
-urlParts pathParts params hash =
-    { seen = []
-    , rest = (List.map PathPart pathParts) ++ [ Query (Dict.fromList params), Hash hash ]
-    }
-
-
 nextPart : UrlParts -> ( Maybe UrlPart, UrlParts )
 nextPart parts =
     case parts.rest of

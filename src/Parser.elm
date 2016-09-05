@@ -1,9 +1,9 @@
-module Parser exposing (Parser, lit, custom, int, string, many, param, optParam, (</>), (<#>), (<?>), parseWith, parseWithDefault, formatPath, formatPart, oneOf)
+module Parser exposing (Parser, urlParts, lit, custom, int, string, many, param, optParam, (</>), (<#>), (<?>), parseWith, parseWithDefault, formatPath, formatPart, oneOf)
 
 {-|
 
 # Change the URL
-@docs Parser, lit, string,int,many, custom, param, optParam, (</>), (<#>), (<?>), parseWith, parseWithDefault, formatPath, formatPart, oneOf
+@docs Parser, urlParts, lit, string,int,many, custom, param, optParam, (</>), (<#>), (<?>), parseWith, parseWithDefault, formatPath, formatPart, oneOf
 
 -}
 
@@ -28,6 +28,16 @@ maybe check out the implementation a bit.
 -}
 type Parser formatter result
     = Parser (UrlParts -> formatter -> Result String ( UrlParts, result ))
+
+
+{-| Helper to construct `URLParts` from elements of a `location`
+
+-}
+urlParts : List String -> List ( String, String ) -> String -> UrlParts
+urlParts pathParts params hash =
+    { seen = []
+    , rest = (List.map PathPart pathParts) ++ [ Query (Dict.fromList params), Hash hash ]
+    }
 
 
 apply : Parser a b -> UrlParts -> a -> Result String ( UrlParts, b )
