@@ -327,7 +327,10 @@ and `bar` can be replaced by any string you can imagine.
       lit "search" </> many string
 
 -}
-many : (a -> Parser (b -> b) c) -> a -> Parser (List c -> d) d
+many :
+    (UrlPartExtractor a -> Parser (b -> b) c)
+    -> UrlPartExtractor a
+    -> Parser (List c -> d) d
 many s e =
     Parser <|
         manyHelper s e []
